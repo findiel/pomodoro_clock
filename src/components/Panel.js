@@ -9,27 +9,35 @@ var fabButtonStyles = {
     minHeight: '2.8rem'
 }
 
+let timer;
+
 class Panel extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            breakLengt: 5,
-            sessionLength: 25,
+            breakLengt: 300,
+            sessionLength: 1500,
+            initialSessionLength: 25,
+            initialBreakLength: 5,
             time: 25,
             isTimerPlayed: false,
+            timerState: 'Session'
         }
         this.toggleTimer = this.toggleTimer.bind(this);
+        this.toggleSession = this.toggleSession.bind(this);
     }
     addMinute(prop) {
         if(this.state.isTimerPlayed === false) {
             if (this.state.breakLengt === 0 || this.state.sessionLength === 0) return
             else if (prop === 'break') {
                 this.setState({
-                    breakLengt: this.state.breakLengt + 1
+                    breakLengt: this.state.breakLengt + 60,
+                    initialBreakLength: this.state.initialBreakLength + 1
                 })
             } else {
                 this.setState({
-                    sessionLength: this.state.sessionLength + 1
+                    sessionLength: this.state.sessionLength + 60,
+                    initialSessionLength: this.state.initialSessionLength + 1
                 })
             }
         } else return
@@ -44,11 +52,13 @@ class Panel extends React.Component {
             if (this.state.breakLengt === 0 || this.state.sessionLength === 0) return
             else if (prop === 'break') {
                 this.setState({
-                    breakLengt: this.state.breakLengt - 1
+                    breakLengt: this.state.breakLengt - 60,
+                    initialBreakLength: this.state.initialBreakLength -1
                 })
             } else {
                 this.setState({
-                    sessionLength: this.state.sessionLength - 1
+                    sessionLength: this.state.sessionLength - 60,
+                    initialSessionLength: this.state.initialSessionLength - 1
                 })
             }
         } else return
@@ -56,8 +66,25 @@ class Panel extends React.Component {
 
     toggleTimer(isTimerPlayed) {
         this.setState({
-            isTimerPlayed: !this.state.isTimerPlayed
+            isTimerPlayed: !isTimerPlayed
         })
+    }
+
+    toggleSession() {
+        console.log(this.state.isTimerPlayed)
+        if(this.state.isTimerPlayed === false) {
+            console.log('start intervals');
+            timer = setInterval(() => {
+                this.setState({
+                sessionLength: this.state.sessionLength - 1
+            })
+            console.log(this.state.sessionLength);
+            console.log(this.state.isTimerPlayed)
+        }, 1000)
+        } else {
+            console.log('clear interval')
+            clearInterval(timer);
+        }
     }
 
     render() {
@@ -69,14 +96,14 @@ class Panel extends React.Component {
                         <Grid item sm>
                             <Grid container>
                                 <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('break')}>+</Fab></Grid>
-                                <Grid item sm>{this.state.breakLengt}</Grid>
+                                <Grid item sm>{this.state.initialBreakLength}</Grid>
                                 <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('break')}>-</Fab></Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item sm >
-                    <Timer toggleTimer={this.toggleTimer} sessionLength={this.convertToSeconds(this.state.sessionLength)} breakLengt={this.convertToSeconds(this.state.breakLengt)} />
+                    <Timer toggleTimer={this.toggleTimer} sessionLength={this.state.sessionLength} breakLengt={this.state.breakLengt} isTimerPlayed={this.state.isTimerPlayed} timerState={this.state.timerState} toggleSession={this.toggleSession} />
                 </Grid>
                 <Grid item sm>
                     <Grid container direction='column'>
@@ -84,7 +111,7 @@ class Panel extends React.Component {
                         <Grid item sm>
                             <Grid container>
                                 <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('session')}>+</Fab></Grid>
-                                <Grid item sm>{this.state.sessionLength}</Grid>
+                                <Grid item sm>{this.state.initialSessionLength}</Grid>
                                 <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('session')}>-</Fab></Grid>
                             </Grid>   
                         </Grid>
