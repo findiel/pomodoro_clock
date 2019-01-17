@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 
@@ -31,12 +30,20 @@ class Timer extends React.Component {
         })
     }
 
-    displayTime() {
-        if ( Math.floor(this.props.sessionLength % 60) < 10) {
-            return `${Math.floor(this.props.sessionLength / 60)}:0${Math.floor(this.props.sessionLength % 60)}`
+    displayTime(timerState) {
+        if (timerState === 'Session') {
+            if ( Math.floor(this.props.sessionLength % 60) < 10) {
+                return `${Math.floor(this.props.sessionLength / 60)}:0${Math.floor(this.props.sessionLength % 60)}`
+            } else {
+                return `${Math.floor(this.props.sessionLength / 60)}:${Math.floor(this.props.sessionLength % 60)}`
+            }
         } else {
-            return `${Math.floor(this.props.sessionLength / 60)}:${Math.floor(this.props.sessionLength % 60)}`
-        }
+            if ( Math.floor(this.props.breakLength % 60) < 10) {
+                return `${Math.floor(this.props.breakLength / 60)}:0${Math.floor(this.props.breakLength % 60)}`
+            } else {
+                return `${Math.floor(this.props.breakLength / 60)}:${Math.floor(this.props.breakLength % 60)}`
+            }
+        } 
     }
 
     render() {
@@ -47,7 +54,7 @@ class Timer extends React.Component {
                 this.props.toggleSession();
             }}>
                 <div>{this.props.timerState}</div>
-                <div>{this.displayTime()}</div>
+                <div>{this.displayTime(this.props.timerState)}</div>
             </Grid>
         )
     }

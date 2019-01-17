@@ -15,7 +15,7 @@ class Panel extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            breakLengt: 300,
+            breakLength: 300,
             sessionLength: 1500,
             initialSessionLength: 25,
             initialBreakLength: 5,
@@ -28,10 +28,10 @@ class Panel extends React.Component {
     }
     addMinute(prop) {
         if(this.state.isTimerPlayed === false) {
-            if (this.state.breakLengt === 0 || this.state.sessionLength === 0) return
+            if (this.state.breakLength === 0 || this.state.sessionLength === 0) return
             else if (prop === 'break') {
                 this.setState({
-                    breakLengt: this.state.breakLengt + 60,
+                    breakLength: this.state.breakLength + 60,
                     initialBreakLength: this.state.initialBreakLength + 1
                 })
             } else {
@@ -49,10 +49,10 @@ class Panel extends React.Component {
 
     subtractMinute(prop) {
         if(this.state.isTimerPlayed === false) {
-            if (this.state.breakLengt === 0 || this.state.sessionLength === 0) return
+            if (this.state.breakLength === 0 || this.state.sessionLength === 0) return
             else if (prop === 'break') {
                 this.setState({
-                    breakLengt: this.state.breakLengt - 60,
+                    breakLength: this.state.breakLength - 60,
                     initialBreakLength: this.state.initialBreakLength -1
                 })
             } else {
@@ -71,18 +71,47 @@ class Panel extends React.Component {
     }
 
     toggleSession() {
-        console.log(this.state.isTimerPlayed)
         if(this.state.isTimerPlayed === false) {
-            console.log('start intervals');
             timer = setInterval(() => {
-                this.setState({
-                sessionLength: this.state.sessionLength - 1
-            })
-            console.log(this.state.sessionLength);
-            console.log(this.state.isTimerPlayed)
+                if (this.state.sessionLength > 0) {
+                    this.setState({
+                        sessionLength: this.state.sessionLength - 1,
+                        timerState: 'Session'
+                    })
+                }
+                else if (this.state.sessionLength <= 0 && this.state.breakLength > 0) {
+                    this.setState({
+                        breakLength: this.state.breakLength - 1,
+                        timerState: 'Break'
+                    })
+                } else {
+                    this.setState({
+                        sessionLength: this.state.initialSessionLength * 60 ,
+                        breakLength: this.state.initialBreakLength * 60,
+                        timerState: 'Session'
+                    })
+                }
         }, 1000)
         } else {
-            console.log('clear interval')
+            clearInterval(timer);
+        }
+    }
+
+    toggleBreak() {
+        if(this.state.isTimerPlayed === false) {
+            timer = setInterval(() => {
+                this.setState({
+                    breakLength: this.state.breakLength - 1,
+                    timerState: 'Break'
+                })
+                if (this.state.breakLength <= 0) {
+                    this.setState({
+                        timerState: 'Session'
+                    })
+                    clearInterval(timer);
+                }
+        }, 1000)
+        } else {
             clearInterval(timer);
         }
     }
@@ -103,7 +132,7 @@ class Panel extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid item sm >
-                    <Timer toggleTimer={this.toggleTimer} sessionLength={this.state.sessionLength} breakLengt={this.state.breakLengt} isTimerPlayed={this.state.isTimerPlayed} timerState={this.state.timerState} toggleSession={this.toggleSession} />
+                    <Timer toggleTimer={this.toggleTimer} sessionLength={this.state.sessionLength} breakLength={this.state.breakLength} isTimerPlayed={this.state.isTimerPlayed} timerState={this.state.timerState} toggleSession={this.toggleSession} toggleBreak={this.toggleBreak} />
                 </Grid>
                 <Grid item sm>
                     <Grid container direction='column'>
