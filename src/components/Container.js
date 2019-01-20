@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import Panel from '../components/Panel';
-import SoundController from '../components/SoundController';
 import Grid from '@material-ui/core/Grid';
 
 const containerStyles = {
     backgroundColor: 'white',
     width: '50rem',
-    height: '30rem',
+    height: '33rem',
     borderRadius: '.5rem',
     boxShadow: '0 1rem 2rem rgba(0, 0, 0, 0.555)',
     fontSize: '1.6rem',
@@ -22,15 +21,12 @@ class Container extends React.Component {
 
     render() {
         return (
-                <Grid style={containerStyles} container direction='column' justify="space-between">
-                    <Grid item sm>
+                <Grid style={containerStyles} container direction='column' justify="flex-start">
+                    <Grid item>
                         <Header />
                     </Grid>
-                    <Grid item sm>
+                    <Grid item sm style={{marginTop: '4rem'}}>
                         <Panel />
-                    </Grid>
-                    <Grid item sm>
-                        <SoundController />
                     </Grid>
                 </Grid>
         );
