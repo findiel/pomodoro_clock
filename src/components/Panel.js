@@ -28,10 +28,10 @@ class Panel extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            breakLength: 3,
-            sessionLength: 5,
-            initialSessionLength: 0.1,
-            initialBreakLength: 0.1,
+            breakLength: 300,
+            sessionLength: 1500,
+            initialSessionLength: 25,
+            initialBreakLength: 25,
             isTimerPlayed: false,
             timerState: 'Session'
         }
@@ -156,7 +156,7 @@ class Panel extends React.Component {
                         </Grid>
                     </Grid>
                     <Grid item sm >
-                        <Timer toggleTimer={this.toggleTimer} sessionLength={this.state.sessionLength} breakLength={this.state.breakLength} isTimerPlayed={this.state.isTimerPlayed} timerState={this.state.timerState} toggleSession={this.toggleSession} toggleBreak={this.toggleBreak} />
+                        <Timer toggleTimer={this.toggleTimer} sessionLength={this.state.sessionLength} breakLength={this.state.breakLength} isTimerPlayed={this.state.isTimerPlayed} timerState={this.state.timerState} toggleSession={this.toggleSession} toggleBreak={this.toggleBreak} initialSessionLength={this.state.initialSessionLength} initialBreakLength={this.state.initialBreakLength}/>
                     </Grid>
                     <Grid item sm>
                         <Grid container direction='column'>

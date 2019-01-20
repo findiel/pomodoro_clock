@@ -8,7 +8,7 @@ const appStyles = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center'
 }
 
 class App extends Component {

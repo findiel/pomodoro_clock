@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Loader from './Loader';
 
-var timerStyle = {
+let timerStyle = {
     width: '16.6rem',
     height: '16.6rem',
-    border: '.5rem solid #3f51b5',
-    borderRadius: '50%',
     color: '#3f51b5',
     fontSize: '2.5rem',
     cursor: 'pointer'
@@ -53,8 +52,9 @@ class Timer extends React.Component {
                 console.log(`Is timer running ? ${!this.props.isTimerPlayed}`);
                 this.props.toggleSession();
             }}>
-                <div>{this.props.timerState}</div>
-                <div>{this.displayTime(this.props.timerState)}</div>
+                <Loader initialSessionLength={this.props.initialSessionLength} initialBreakLength={this.props.initialBrakLength} timerState={this.props.timerState}/>
+                <div style={{zIndex: 2}}>{this.props.timerState}</div>
+                <div style={{zIndex: 2}}>{this.displayTime(this.props.timerState)}</div>
             </Grid>
         )
     }
