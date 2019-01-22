@@ -1,34 +1,42 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 let loaderStyle = {
-    position: 'absolute'
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    transform: 'rotate(-90deg)'
 }
 
 let circleStyle = {
-    strokeDasharray: 20 * Math.PI * 2,
-    strokeDashoffset: 20 * Math.PI * 2,
-    //transform: 'rotate(-90deg)'
+    strokeDasharray: 150 * Math.PI * 2,
+    strokeDashoffset: 150 * Math.PI * 2
 }
 
-class Loader extends React.Component {
-    constructor() {
-        super();
+class Loader extends PureComponent {
+    constructor(props) {
+        super(props);
+
     }
 
     defineAnimationTime() {
-        if (this.props.timerState === "Session") {
+        console.log(this.props.isTimerPlayed, this.props.timerState);
+        if (this.props.timerState === "Session"){
+            console.log(`${this.props.initialSessionLength * 60}s`);
             return `${this.props.initialSessionLength * 60}s`;
-        } else {
-            return `${this.props.initialBreakLength * 60}s`;
-        }
+            } else if (this.props.timerState === "Break") {
+                console.log(this.props.initialBreakLength)
+                return `${this.props.initialBreakLength * 60}s`;
+            }
     }
+
+    componentDidMount
 
     render() {
         return (
-            <svg style={loaderStyle} viewBox="0 0 166 166">
-                <circle style={circleStyle} cx="83" cy="83" r="20" stroke="#3f51b5" fill="none" stroke-width="2" stroke-linecap="round">
-                    <animate attributeName="stroke-dashoffset" dur={this.defineAnimationTime()} to={-20 * Math.PI * 2}repeatCount="indefinite"/>
-                </circle>
+            <svg style={loaderStyle} viewBox="0 0 1280 1280">
+                { this.props.isTimerPlayed && <circle style={circleStyle} cx="640" cy="640" r="150" stroke="#3f51b5" fill="none" strokeWidth="2" strokeLinecap="round">
+                    <animate attributeName="stroke-dashoffset" dur={this.defineAnimationTime()} to={-150 * Math.PI * 2} repeatCount="indefinite"/>
+                </circle>}
             </svg>
         )
     }

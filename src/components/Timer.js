@@ -52,7 +52,7 @@ class Timer extends React.Component {
                 console.log(`Is timer running ? ${!this.props.isTimerPlayed}`);
                 this.props.toggleSession();
             }}>
-                <Loader initialSessionLength={this.props.initialSessionLength} initialBreakLength={this.props.initialBrakLength} timerState={this.props.timerState}/>
+                <Loader initialSessionLength={this.props.initialSessionLength} initialBreakLength={this.props.initialBreakLength} timerState={this.props.timerState} isTimerPlayed={this.props.isTimerPlayed}/>
                 <div style={{zIndex: 2}}>{this.props.timerState}</div>
                 <div style={{zIndex: 2}}>{this.displayTime(this.props.timerState)}</div>
             </Grid>

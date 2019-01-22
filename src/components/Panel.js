@@ -28,10 +28,10 @@ class Panel extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            breakLength: 300,
-            sessionLength: 1500,
-            initialSessionLength: 25,
-            initialBreakLength: 25,
+            breakLength: 3,
+            sessionLength: 5,
+            initialSessionLength: 0.1,
+            initialBreakLength: 0.3,
             isTimerPlayed: false,
             timerState: 'Session'
         }
