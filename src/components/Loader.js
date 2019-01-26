@@ -7,25 +7,16 @@ let loaderStyle = {
     zIndex: 5
 }
 
-let circleStyle = {
-    strokeDasharray: 150 * Math.PI * 2,
-    strokeDashoffset: 150 * Math.PI * 2
-}
-
-let sim;
-
 class Loader extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            alreadyLoaded: 0,
             difference: 0
         }
         this.progressSim = this.progressSim.bind(this);
     }
 
     componentWillReceiveProps() {
-        //clearInterval(sim)
         this.progressSim();
     }
 
@@ -35,13 +26,12 @@ class Loader extends PureComponent {
         const cw = ctx.canvas.width
         const ch = ctx.canvas.height
         const start = 4.72
-        console.log("onload")
         if (this.props.isTimerPlayed) {
-            console.log("a");
-            if (this.props.timerState === "Session") {
-                sim = setInterval(() => { 
-                    this.setState({
-                    difference: ((this.state.alreadyLoaded / (this.props.initialSessionLength * 60)) * Math.PI * 2 * 10).toFixed(2)
+            console.log("Played");
+            if (this.props.timerState === "Session") { 
+                console.log("Session")
+                this.setState({
+                    difference: ((((this.props.initialSessionLength * 60) - this.props.sessionLength) / (this.props.initialSessionLength * 60)) * Math.PI * 2 * 10).toFixed(2)
                 }, function() {
                     ctx.clearRect(0, 0, cw, ch);
                     ctx.lineWidth = 10;
@@ -49,28 +39,24 @@ class Loader extends PureComponent {
                     ctx.beginPath();
                     ctx.arc(35, 35, 30, start, this.state.difference / 10 + start, false);
                     ctx.stroke();
-                    this.setState({
-                        alreadyLoaded: this.state.alreadyLoaded + 1
-                    })
-                    if (this.state.alreadyLoaded - 1 === this.props.initialSessionLength * 60) {
+                    if (((((this.props.initialSessionLength * 60) - this.props.sessionLength) / (this.props.initialSessionLength * 60)) * Math.PI * 2 * 10) === this.props.initialSessionLength * 60) {
                         this.setState({
-                            alreadyLoaded: 0,
                             difference: 0
                         }, function() {
-                            clearInterval(sim);
+                            console.log("last iteration");
                             ctx.clearRect(0, 0, cw, ch);
                             ctx.lineWidth = 10;
                             ctx.strokeStyle = "#3f51b5";
                             ctx.beginPath();
-                            ctx.arc(35, 35, 30, start, this.state.difference / 10 + start, false);
+                            ctx.arc(35, 35, 30, start, 0, false);
                             ctx.stroke();
                         })
                     }
-                })}, 1000)
+                })
             } else {
-                sim = setInterval(() => { 
-                    this.setState({
-                    difference: ((this.state.alreadyLoaded / (this.props.initialBreakLength * 60)) * Math.PI * 2 * 10).toFixed(2)
+                console.log("Break")
+                this.setState({
+                    difference: ((((this.props.initialBreakLength * 60) - this.props.breakLength) / (this.props.initialBreakLength * 60)) * Math.PI * 2 * 10).toFixed(2)
                 }, function() {
                     ctx.clearRect(0, 0, cw, ch);
                     ctx.lineWidth = 10;
@@ -78,28 +64,23 @@ class Loader extends PureComponent {
                     ctx.beginPath();
                     ctx.arc(35, 35, 30, start, this.state.difference / 10 + start, false);
                     ctx.stroke();
-                    this.setState({
-                        alreadyLoaded: this.state.alreadyLoaded + 1
-                    })
-                    if (this.state.alreadyLoaded - 1 === this.props.initialBreakLength * 60) {
+                    if (((((this.props.initialBreakLength * 60) - this.props.breakLength) / (this.props.initialBreakLength * 60)) * Math.PI * 2 * 10) === this.props.initialBreakLength * 60) {
                         this.setState({
-                            alreadyLoaded: 0,
                             difference: 0
                         }, function() {
-                            clearInterval(sim);
+                            console.log("last iteration");
                             ctx.clearRect(0, 0, cw, ch);
                             ctx.lineWidth = 10;
                             ctx.strokeStyle = "#3f51b5";
                             ctx.beginPath();
-                            ctx.arc(35, 35, 30, start, this.state.difference / 10 + start, false);
+                            ctx.arc(35, 35, 30, 0, false);
                             ctx.stroke();
                         })
                     }
-                })}, 1000)
+                })
             }
         } else {
-            console.log("b")
-            clearInterval(sim);
+            console.log("Stopped")
             ctx.clearRect(0, 0, cw, ch);
             ctx.lineWidth = 10;
             ctx.strokeStyle = "#3f51b5";
@@ -124,7 +105,7 @@ class Loader extends PureComponent {
 
     render() {
         return (
-            <canvas ref="canvas" style={loaderStyle} ></canvas>
+            <canvas ref="canvas" style={loaderStyle}></canvas>
         )
     }
 }
