@@ -4,7 +4,6 @@ import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import Timer from './Timer';
 import soundfile from '../assets/alert.mp3';
-//import Alert from './Alert';
 
 let fabButtonStyles = {
     height: '2.8rem',
@@ -24,7 +23,7 @@ let alert = () => {
 }
 
 
-class Panel extends React.Component {
+class Panel extends Component {
     constructor(props) {
         super();
         this.state = {
@@ -41,17 +40,16 @@ class Panel extends React.Component {
     }
     addMinute(prop) {
         if(this.state.isTimerPlayed === false) {
-            console.log(alert);
             if (prop === 'break') {
                 this.setState({
                     breakLength: (this.state.initialBreakLength) * 60 + 60,
                     initialBreakLength: this.state.initialBreakLength + 1
-                })
+                }, this.resetTimer)
             } else {
                 this.setState({
                     sessionLength: (this.state.initialSessionLength) * 60 + 60,
                     initialSessionLength: this.state.initialSessionLength + 1
-                })
+                }, this.resetTimer)
             }
         } else return
     }
@@ -72,18 +70,18 @@ class Panel extends React.Component {
                     this.setState({
                         sessionLength: 0,
                         initialSessionLength: 0
-                    })
+                    }, this.resetTimer)
             } else {
                 if (prop === 'break') {
                     this.setState({
                         breakLength: (this.state.initialBreakLength) * 60 - 60,
                         initialBreakLength: this.state.initialBreakLength -1
-                    })
+                    }, this.resetTimer)
                 } else {
                     this.setState({
                         sessionLength: (this.state.initialSessionLength) * 60 - 60,
                         initialSessionLength: this.state.initialSessionLength - 1
-                    })
+                    }, this.resetTimer)
                 }
             }
         } else return
@@ -133,6 +131,7 @@ class Panel extends React.Component {
     resetTimer() {
         this.setState({
             isTimerPlayed: false,
+            timerState: 'Session',
             sessionLength: this.state.initialSessionLength * 60,
             breakLength: this.state.initialBreakLength * 60
         })

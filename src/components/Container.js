@@ -14,10 +14,7 @@ const containerStyles = {
     color: '#282c34'
 }
 
-class Container extends React.Component {
-    constructor(props) {
-        super();
-    }
+class Container extends Component {
 
     render() {
         return (

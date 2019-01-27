@@ -14,11 +14,7 @@ const headerStyles = {
     color: 'white'
 }
 
-class Header extends React.Component {
-    constructor(props) {
-        super();
-    }
-
+class Header extends Component {
     render() {
         return (
             <AppBar style={headerStyles}>Pomodoro Clock</AppBar>

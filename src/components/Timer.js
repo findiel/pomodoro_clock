@@ -10,11 +10,8 @@ let timerStyle = {
     cursor: 'pointer'
 }
 
-class Timer extends React.Component {
-    constructor(props) {
-        super();
-    }
-
+class Timer extends Component {
+    
     componentWillMount(){
         this.setState({
             sessionLength: this.props.sessionLength,
