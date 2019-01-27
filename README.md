@@ -12,7 +12,7 @@ User Story: Every time you change pomodoro clock properties it will reset.
 User Story: You can reset pomodoro clock and it will back to initial state that you've set. <br />
 
 # LIVE
-
+`It will be available soon. You can now run it in development mode. Info below.`
 
 # INFO
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
