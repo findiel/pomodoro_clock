@@ -8,12 +8,14 @@ import soundfile from '../assets/alert.mp3';
 let fabButtonStyles = {
     height: '2.8rem',
     width: '2.8rem',
-    minHeight: '2.8rem'
+    minHeight: '2.8rem',
+    fontSize: '1.6rem',
+    fontWeight: '500'
 }
 
 let resetButtonStyle = {
     marginTop: '2rem',
-    fontSize: '1.2rem'
+    fontSize: '1.4rem'
 }
 
 let timer;
@@ -140,8 +142,8 @@ class Panel extends Component {
 
     render() {
         return (
-            <Grid container justify='center'>
-                <Grid container alignItems='center'>
+            <Grid container justify='center' className="a">
+                <Grid container alignItems='center' className="panel">
                     <Grid item sm>
                         <Grid container direction='column'>
                             <Grid item sm style={{paddingBottom: '1rem'}}>Break Length</Grid>
