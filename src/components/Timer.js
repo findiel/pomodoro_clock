@@ -11,7 +11,7 @@ let timerStyle = {
 }
 
 class Timer extends Component {
-    
+
     componentWillMount(){
         this.setState({
             sessionLength: this.props.sessionLength,
@@ -19,7 +19,7 @@ class Timer extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps){ // Micgaw - obie te funkcje są deprecated https://reactjs.org/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes
         this.setState({
             sessionLength: nextProps.sessionLength,
             breakLength: nextProps.breakLength
@@ -29,7 +29,7 @@ class Timer extends Component {
     displayTime(timerState) {
         if (timerState === 'Session') {
             if ( Math.floor(this.props.sessionLength % 60) < 10) {
-                return `${Math.floor(this.props.sessionLength / 60)}:0${Math.floor(this.props.sessionLength % 60)}`
+                return `${Math.floor(this.props.sessionLength / 60)}:0${Math.floor(this.props.sessionLength % 60)}` // Micgaw - za dużo razy się powtarza, wyciągnąłbym do jakiejś funkcji
             } else {
                 return `${Math.floor(this.props.sessionLength / 60)}:${Math.floor(this.props.sessionLength % 60)}`
             }
@@ -39,7 +39,7 @@ class Timer extends Component {
             } else {
                 return `${Math.floor(this.props.breakLength / 60)}:${Math.floor(this.props.breakLength % 60)}`
             }
-        } 
+        }
     }
 
     render() {

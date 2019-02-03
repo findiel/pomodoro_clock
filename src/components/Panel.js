@@ -22,7 +22,7 @@ let timer;
 let alert = () => {
     let audio = new Audio(soundfile);
     audio.play();
-}
+} // Micgaw - oprócz timera chyba consty zamiast letów?
 
 
 class Panel extends Component {
@@ -39,12 +39,12 @@ class Panel extends Component {
         this.toggleTimer = this.toggleTimer.bind(this);
         this.toggleSession = this.toggleSession.bind(this);
         this.resetTimer = this.resetTimer.bind(this);
-    }
+    } // Micgaw - można robić w ten sposób, ale można też wpisywać state = {}, i funkcje pisać jako arrow functions, ale to nie błąd tylko raczej preferencja programisty
     addMinute(prop) {
         if(this.state.isTimerPlayed === false) {
             if (prop === 'break') {
                 this.setState({
-                    breakLength: (this.state.initialBreakLength) * 60 + 60,
+                    breakLength: (this.state.initialBreakLength) * 60 + 60, // Micgaw -  po co zmieniać tą wartość skoro zaraz jest reset timer?
                     initialBreakLength: this.state.initialBreakLength + 1
                 }, this.resetTimer)
             } else {
@@ -53,10 +53,10 @@ class Panel extends Component {
                     initialSessionLength: this.state.initialSessionLength + 1
                 }, this.resetTimer)
             }
-        } else return
+        } else return // Micgaw - return tu raczej niepotrzebny
     }
 
-    convertToSeconds(minutes) {
+    convertToSeconds(minutes) { // Micgaw - to możnaby do jakiś utilsów wyrzucić
         return minutes * 60;
     }
 
@@ -67,7 +67,7 @@ class Panel extends Component {
                     breakLength: 0,
                     initialBreakLength: 0
                 })
-            } 
+            }
             else if (this.state.sessionLength <= 0 && this.state.initialSessionLength <= 0 && prop === 'session') {
                     this.setState({
                         sessionLength: 0,
@@ -76,7 +76,7 @@ class Panel extends Component {
             } else {
                 if (prop === 'break') {
                     this.setState({
-                        breakLength: (this.state.initialBreakLength) * 60 - 60,
+                        breakLength: (this.state.initialBreakLength) * 60 - 60, // Micgaw -  po co zmieniać tą wartość skoro zaraz jest reset timer?
                         initialBreakLength: this.state.initialBreakLength -1
                     }, this.resetTimer)
                 } else {
@@ -108,7 +108,7 @@ class Panel extends Component {
             timer = setInterval(() => {
                 if (this.state.sessionLength > 0) {
                     this.setState({
-                        sessionLength: this.state.sessionLength - 1,
+                        sessionLength: this.state.sessionLength - 1,  // Micgaw - czemu tu jest -1?
                         timerState: 'Session'
                     }, this.playAlert)
                 }
@@ -158,6 +158,7 @@ class Panel extends Component {
                     </Grid>
                     <Grid item sm >
                         <Timer toggleTimer={this.toggleTimer} sessionLength={this.state.sessionLength} breakLength={this.state.breakLength} isTimerPlayed={this.state.isTimerPlayed} timerState={this.state.timerState} toggleSession={this.toggleSession} toggleBreak={this.toggleBreak} initialSessionLength={this.state.initialSessionLength} initialBreakLength={this.state.initialBreakLength}/>
+                        {/*  Micgaw - wydaje mi się że Timer nie musi wiedzieć co odlicza Panel mógłby zmieniać stan między break a session a timer tylko odliczać czas do jakiejś wartości */}
                     </Grid>
                     <Grid item sm>
                         <Grid container direction='column'>
@@ -167,12 +168,12 @@ class Panel extends Component {
                                     <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('session')}>+</Fab></Grid>
                                     <Grid item sm>{this.state.initialSessionLength}</Grid>
                                     <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('session')}>-</Fab></Grid>
-                                </Grid>   
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Button style={resetButtonStyle}variant="contained" size="medium" color="primary" onClick={this.resetTimer}>reset</Button> 
+                <Button style={resetButtonStyle}variant="contained" size="medium" color="primary" onClick={this.resetTimer}>reset</Button>
             </Grid>
         )
     }

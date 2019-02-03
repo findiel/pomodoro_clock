@@ -17,7 +17,7 @@ const headerStyles = {
 class Header extends Component {
     render() {
         return (
-            <AppBar style={headerStyles}>Pomodoro Clock</AppBar>
+            <AppBar style={headerStyles}>Pomodoro Clock</AppBar> // Micgaw - style póki co jest ok, ale poczytaj sobie o używaniu className
         )
     }
 }

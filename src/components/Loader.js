@@ -10,22 +10,22 @@ class Loader extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            difference: 0
+            difference: 0 // Micgaw - ten stan nie jest potrzebny
         }
         this.progressSim = this.progressSim.bind(this);
     }
 
     componentDidMount() {
-        canvas = this.refs.canvas;
+        canvas = this.refs.canvas; // Micgaw - trochę inaczej się robi z refami w Reactie https://reactjs.org/docs/refs-and-the-dom.html
         canvas.width  = 166;
-        canvas.height = 166; 
+        canvas.height = 166;
         ctx = canvas.getContext("2d");
         cw = ctx.canvas.width;
         ch = ctx.canvas.height;
-        start = 4.72;
+        start = 4.72; // Micgaw - skąd ta wartość?
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps() { // Micgaw - ta metoda jest deprecated no i raczej będziesz tej metody używał na componentDidUpdate
         this.progressSim();
     }
 
@@ -39,10 +39,10 @@ class Loader extends PureComponent {
     }
 
     progressSim() {
-        if (this.props.isTimerPlayed) {
-            if (this.props.timerState === "Session") { 
-                this.setState({
-                    difference: ((((this.props.initialSessionLength * 60) - this.props.sessionLength) / (this.props.initialSessionLength * 60)) * Math.PI * 2 * 10).toFixed(2)
+        if (this.props.isTimerPlayed) { // Micgaw - ogólnie trochę za dużo zagnieżdzeń, ciężko się to czyta, ale to możemy razem to najpierw pozostałem poprawki a potem możemy siąść razem nad tym i to rozpisać
+            if (this.props.timerState === "Session") {
+                this.setState({ // Micgaw - te wszystkie setState do wywalenia
+                    difference: ((((this.props.initialSessionLength * 60) - this.props.sessionLength) / (this.props.initialSessionLength * 60)) * Math.PI * 2 * 10).toFixed(2) // Micgaw - wyciągnąłbym do osobnej funkcji obliczanie % wypełnienia okręgu
                 }, function() {
                     this.drawCircle(83, 83, 65, start, this.state.difference / 10 + start)
                     if (((((this.props.initialSessionLength * 60) - this.props.sessionLength) / (this.props.initialSessionLength * 60)) * Math.PI * 2 * 10) === this.props.initialSessionLength * 60) {
@@ -74,7 +74,7 @@ class Loader extends PureComponent {
 
     render() {
         return (
-            <canvas ref="canvas" style={loaderStyle}></canvas>
+            <canvas ref="canvas" style={loaderStyle}></canvas> // Micgaw - jeśli tag jest pusty to lepiej <canvas (tu jakieś propsy) />
         )
     }
 }
