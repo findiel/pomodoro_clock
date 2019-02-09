@@ -12,11 +12,12 @@ class Loader extends PureComponent {
         this.state = {
             difference: 0
         }
+        this.canvas = React.createRef()
         this.progressSim = this.progressSim.bind(this);
     }
 
     componentDidMount() {
-        canvas = this.refs.canvas;
+        canvas = this.canvas.current;
         canvas.width  = 166;
         canvas.height = 166; 
         ctx = canvas.getContext("2d");
@@ -25,7 +26,7 @@ class Loader extends PureComponent {
         start = 4.72;
     }
 
-    componentWillReceiveProps() {
+    componentDidUpdate() {
         this.progressSim();
     }
 
@@ -74,7 +75,7 @@ class Loader extends PureComponent {
 
     render() {
         return (
-            <canvas ref="canvas" style={loaderStyle}></canvas>
+            <canvas ref={this.canvas} style={loaderStyle} />
         )
     }
 }
