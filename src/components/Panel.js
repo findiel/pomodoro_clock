@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Timer from './Timer';
 import soundfile from '../assets/alert.mp3';
 
-let fabButtonStyles = {
+const fabButtonStyles = {
     height: '2.8rem',
     width: '2.8rem',
     minHeight: '2.8rem',
@@ -13,14 +13,14 @@ let fabButtonStyles = {
     fontWeight: '500'
 }
 
-let resetButtonStyle = {
+const resetButtonStyle = {
     marginTop: '2rem',
     fontSize: '1.4rem'
 }
 
 let timer;
-let alert = () => {
-    let audio = new Audio(soundfile);
+const alert = () => {
+    const audio = new Audio(soundfile);
     audio.play();
 }
 
@@ -54,10 +54,6 @@ class Panel extends Component {
                 }, this.resetTimer)
             }
         } else return
-    }
-
-    convertToSeconds(minutes) {
-        return minutes * 60;
     }
 
     subtractMinute(prop) {

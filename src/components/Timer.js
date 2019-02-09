@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Loader from './Loader';
+import displayer from '../utils/displayer';
 
-let timerStyle = {
+const timerStyle = {
     width: '16.6rem',
     height: '16.6rem',
     color: '#3f51b5',
@@ -19,27 +20,15 @@ class Timer extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            sessionLength: nextProps.sessionLength,
-            breakLength: nextProps.breakLength
-        })
-    }
-
     displayTime(timerState) {
+        let currentTime;
         if (timerState === 'Session') {
-            if ( Math.floor(this.props.sessionLength % 60) < 10) {
-                return `${Math.floor(this.props.sessionLength / 60)}:0${Math.floor(this.props.sessionLength % 60)}`
-            } else {
-                return `${Math.floor(this.props.sessionLength / 60)}:${Math.floor(this.props.sessionLength % 60)}`
-            }
+            currentTime = displayer(this.props.sessionLength);
+            return currentTime
         } else {
-            if ( Math.floor(this.props.breakLength % 60) < 10) {
-                return `${Math.floor(this.props.breakLength / 60)}:0${Math.floor(this.props.breakLength % 60)}`
-            } else {
-                return `${Math.floor(this.props.breakLength / 60)}:${Math.floor(this.props.breakLength % 60)}`
-            }
-        } 
+            currentTime = displayer(this.props.breakLength);
+            return currentTime
+        }
     }
 
     render() {

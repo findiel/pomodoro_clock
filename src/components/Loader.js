@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-let loaderStyle = {
+const loaderStyle = {
     position: 'absolute'
 }
 
