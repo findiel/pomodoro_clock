@@ -7,7 +7,6 @@ The Pomodoro Tracker — A useful tool for time management based on Pomodoro Tec
 `User Story:` It's an infinite loop if you run it and do not change any pomodoro properties. You will hear an audio every time pomodoro clock switch to break or to the session. <br />
 `User Story:` Progress bar is dependent from session or break time. <br />
 `User Story:` You can pause/play the session and the break. <br />
-`User Story:` You can change the session and the break time only if the session is not currently playing. <br />
 `User Story:` Every time you change pomodoro clock properties it will reset. <br />
 `User Story:` You can reset pomodoro clock and it will back to initial state that you've set. <br />
 

@@ -4,13 +4,15 @@ import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import Timer from './Timer';
 import soundfile from '../assets/alert.mp3';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const fabButtonStyles = {
     height: '2.8rem',
     width: '2.8rem',
     minHeight: '2.8rem',
-    fontSize: '1.6rem',
-    fontWeight: '500'
+    fontWeight: '500',
+    color: '#282c34'
 }
 
 const resetButtonStyle = {
@@ -41,48 +43,44 @@ class Panel extends Component {
         this.resetTimer = this.resetTimer.bind(this);
     }
     addMinute(prop) {
-        if(this.state.isTimerPlayed === false) {
-            if (prop === 'break') {
-                this.setState({
-                    breakLength: (this.state.initialBreakLength) * 60 + 60,
-                    initialBreakLength: this.state.initialBreakLength + 1
-                }, this.resetTimer)
-            } else {
-                this.setState({
-                    sessionLength: (this.state.initialSessionLength) * 60 + 60,
-                    initialSessionLength: this.state.initialSessionLength + 1
-                }, this.resetTimer)
-            }
-        } else return
+        if (prop === 'break') {
+            this.setState({
+                breakLength: (this.state.initialBreakLength) * 60 + 60,
+                initialBreakLength: this.state.initialBreakLength + 1
+            }, this.resetTimer)
+        } else {
+            this.setState({
+                sessionLength: (this.state.initialSessionLength) * 60 + 60,
+                initialSessionLength: this.state.initialSessionLength + 1
+            }, this.resetTimer)
+        }
     }
 
     subtractMinute(prop) {
-        if(this.state.isTimerPlayed === false) {
-            if (this.state.breakLength <= 0 && this.state.initialBreakLength <= 0 && prop === 'break') {
+        if (this.state.breakLength <= 0 && this.state.initialBreakLength <= 0 && prop === 'break') {
+            this.setState({
+                breakLength: 0,
+                initialBreakLength: 0
+            })
+        } 
+        else if (this.state.sessionLength <= 0 && this.state.initialSessionLength <= 0 && prop === 'session') {
+            this.setState({
+                sessionLength: 0,
+                initialSessionLength: 0
+            }, this.resetTimer)
+        } else {
+            if (prop === 'break') {
                 this.setState({
-                    breakLength: 0,
-                    initialBreakLength: 0
-                })
-            } 
-            else if (this.state.sessionLength <= 0 && this.state.initialSessionLength <= 0 && prop === 'session') {
-                    this.setState({
-                        sessionLength: 0,
-                        initialSessionLength: 0
-                    }, this.resetTimer)
+                    breakLength: (this.state.initialBreakLength) * 60 - 60,
+                    initialBreakLength: this.state.initialBreakLength -1
+                }, this.resetTimer)
             } else {
-                if (prop === 'break') {
-                    this.setState({
-                        breakLength: (this.state.initialBreakLength) * 60 - 60,
-                        initialBreakLength: this.state.initialBreakLength -1
-                    }, this.resetTimer)
-                } else {
-                    this.setState({
-                        sessionLength: (this.state.initialSessionLength) * 60 - 60,
-                        initialSessionLength: this.state.initialSessionLength - 1
-                    }, this.resetTimer)
-                }
+                this.setState({
+                    sessionLength: (this.state.initialSessionLength) * 60 - 60,
+                    initialSessionLength: this.state.initialSessionLength - 1
+                }, this.resetTimer)
             }
-        } else return
+        }
     }
 
     toggleTimer(isTimerPlayed) {
@@ -145,9 +143,9 @@ class Panel extends Component {
                             <Grid item sm style={{paddingBottom: '1rem'}}>Break Length</Grid>
                             <Grid item sm>
                                 <Grid container>
-                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('break')}>+</Fab></Grid>
+                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('break')}><RemoveIcon /></Fab></Grid>
                                     <Grid item sm>{this.state.initialBreakLength}</Grid>
-                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('break')}>-</Fab></Grid>
+                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('break')}><AddIcon /></Fab></Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -160,9 +158,9 @@ class Panel extends Component {
                             <Grid item sm style={{paddingBottom: '1rem'}}>Session Length</Grid>
                             <Grid item sm>
                                 <Grid container>
-                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('session')}>+</Fab></Grid>
+                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('session')}><RemoveIcon /></Fab></Grid>
                                     <Grid item sm>{this.state.initialSessionLength}</Grid>
-                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.subtractMinute('session')}>-</Fab></Grid>
+                                    <Grid item sm><Fab style={fabButtonStyles} onClick={() => this.addMinute('session')}><AddIcon /></Fab></Grid>
                                 </Grid>   
                             </Grid>
                         </Grid>

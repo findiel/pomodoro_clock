@@ -9,7 +9,7 @@ const containerStyles = {
     height: '33rem',
     borderRadius: '.5rem',
     boxShadow: '0 1rem 2rem rgba(0, 0, 0, 0.555)',
-    fontSize: '1.6rem',
+    fontSize: '1.7rem',
     fontWeight: '500',
     color: '#282c34'
 }

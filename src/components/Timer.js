@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Loader from './Loader';
-import displayer from '../utils/displayer';
+import TimeDiplayer from '../utils/TimeDiplayer';
 
 const timerStyle = {
     width: '16.6rem',
@@ -23,10 +23,10 @@ class Timer extends Component {
     displayTime(timerState) {
         let currentTime;
         if (timerState === 'Session') {
-            currentTime = displayer(this.props.sessionLength);
+            currentTime = TimeDiplayer(this.props.sessionLength);
             return currentTime
         } else {
-            currentTime = displayer(this.props.breakLength);
+            currentTime = TimeDiplayer(this.props.breakLength);
             return currentTime
         }
     }
