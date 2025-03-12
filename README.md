@@ -11,7 +11,7 @@ The Pomodoro Tracker — A useful tool for time management based on Pomodoro Tec
 `User Story:` You can reset pomodoro clock and it will back to initial state that you've set. <br />
 
 # LIVE
-https://fjollsfinn.github.io/pomodoro_clock/ <br />
+https://findiel.github.io/pomodoro_clock/ <br />
 `You can also run it in development mode. Info below.`
 
 # INFO
